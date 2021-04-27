@@ -35,45 +35,56 @@ void selection_sort(uint32_t*a, uint32_t N)
 }
 
 
-void merge(uint32_t*a, uint32_t l, uint32_t r)
+void merges(int *a, int left, int right)
 {
-    // make copies of the array
-    uint32_t mid = (l+r)/2;
-    uint32_t n1 = (mid-l)+1;
-    uint32_t n2 = (r-mid);
-    int L[n1];
-    int R[n2];
-    for (uint32_t i = 0; i < n1; i++) L[i] = a[i+l];
-    for (uint32_t i = 0; i < n2; i++) R[i] = a[i+mid+1];
+    if (left >= right) return;
+    int mid = (left+right)/2;
+    merges(a, left, mid);
+    merges(a, mid+1, right);
+    
+    // merge both subarrays
+    int n1 = mid-left+1;
+    int n2 = right-mid;
+    int l[n1];
+    int r[n2];
+    
+    for (int i = 0; i < n1; i++) l[i] = a[left+i];
+    for (int i = 0; i < n2; i++) r[i] = a[mid+1+i];
+    
+    // merge l and r
+    int k = left;
+    int i = 0, j = 0; 
+    while (i < n1 && j < n2)
+        if (l[i] < r[j])
+            a[k++] = l[i++];
+        else 
+            a[k++] = r[j++];
+        
+    while (i < n1)
+        a[k++] = l[i++];
+        
+    while (i < n2)
+        a[k++] = r[i++];
+}
 
-    uint32_t p = 0, q = 0;
-    uint32_t i = l;
-    while (p < n1 && q < n2) {
-        if (L[p] < R[q])
-            a[i++] = L[p++];
-        else
-            a[i++] = R[q++];
+
+// This chooses last element as the pivot
+void  quick_sort(int *a, int left, int right)
+{
+    if (left >= right) return;
+    int pivot = a[right];
+    int sorted = left;
+    
+    for (int i = left; i <= right-1; i++) {
+        if (a[i] < pivot) {
+            std::swap(a[i], a[sorted]);
+            sorted++;
+        }
     }
-
-    while (p < n1) a[i++] = L[p++];
-    while (q < n2) a[i++] = R[q++];
+    std::swap(a[sorted], a[right]);
+    qssort(a, left, sorted-1);
+    qssort(a, sorted+1, right);
 }
-void merge_sort(uint32_t*a, uint32_t l, uint32_t r)
-{
-    if (l >= r) return;
-    uint32_t mid = (l+r)/2;
-
-    merge_sort(a,l,mid);
-    merge_sort(a,mid+1,r);
-    merge(a,l,r);
-}
-
-
-void quick_sort(uint32_t*a, uint32_t N)
-{
-    // Select a pivot 
-}
-
 
 void print(uint32_t* a, uint32_t N)
 {
@@ -90,3 +101,7 @@ int main(int argc, char** argv)
 
     return 0;
 }
+
+
+Quick select
+------------
