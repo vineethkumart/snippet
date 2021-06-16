@@ -1,0 +1,28 @@
+Divide shape into 2
+-------------------
+Rectangle -> any line passing through the center
+Rectange with missing piece as rectangle -> draw line passing through center of both
+
+
+Dice and represent days of months
+--------------------------------
+2 dice and repr:
+0 1 2 3 5 7
+0 1 2 4 6 8
+
+Random number generator
+-----------------------
+generate rand 1-7 given rand 1-5
+rand5() -> gives 1 to 5
+
+int rand7() {
+    while (1) {
+        int num = 5*(rand5()-1) + rand5() - 1; // this generates in range 0-24 uniform. has to be like this
+        // if was 3(0-4) + (0-4) say a number 9: 3*3+3 or 8 + 1 multiple ways
+        // if 5*(0-4) + (0-4) this is like each bit of base5 numebr generating and uniform
+        // Do that and reject sample if not feasible
+        if (num <= 20) return ((num % 7) + 1);
+    }
+}
+
+

@@ -25,8 +25,6 @@ int absearch(int n, int l, int r)
 {
     while (l <= r) {
         int mid = l + (r-l)/2;
-        if (mid * mid == n) return mid; // found
-
         if (mid * mid < n) {
             l = mid + 1;
         } else {
@@ -34,19 +32,20 @@ int absearch(int n, int l, int r)
         }
     }
 
-    if (l * l > n) return l - 1;
     return l;
 }
 
 int main()
 {
     int a[] = {1,2,4,6,9,10,12,13,15};
+    /*
     cout << bsearch(a, 9, 0, 8, 12) << endl;
     cout << bsearch(a, 9, 0, 8, 15) << endl;
     cout << bsearch(a, 9, 0, 8, 1) << endl;
     cout << bsearch(a, 9, 0, 8, 0) << endl;
+    */
 
-    int n = 50;
+    int n = 49;
     cout << absearch(n, 0, (n/2)) << endl;
     return 0;
 }

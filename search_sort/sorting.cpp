@@ -38,7 +38,7 @@ void selection_sort(uint32_t*a, uint32_t N)
 void merges(int *a, int left, int right)
 {
     if (left >= right) return;
-    int mid = (left+right)/2;
+    int mid = (left + (right-left)/2);
     merges(a, left, mid);
     merges(a, mid+1, right);
     
@@ -63,8 +63,8 @@ void merges(int *a, int left, int right)
     while (i < n1)
         a[k++] = l[i++];
         
-    while (i < n2)
-        a[k++] = r[i++];
+    while (j < n2)
+        a[k++] = r[j++];
 }
 
 
@@ -84,6 +84,33 @@ void  quick_sort(int *a, int left, int right)
     std::swap(a[sorted], a[right]);
     qssort(a, left, sorted-1);
     qssort(a, sorted+1, right);
+}
+
+/*
+Quick sort and duplicates - The above algorithm will fail when we have duplicate pivots. This can be handled by 
+3 - way partitioning - ***
+    Dutch national flag algorithm. So for a quick sort always implement the partition as a 3 way partitioning and keep pivot in its original position
+*/
+
+void partition_3way(int *a, int left, int right)
+{
+    int pivot = a[right];
+    int l(left);
+    int r(right);
+
+    int p(l);
+
+    while (p <= right) {
+        if (a[p] < a[l]) {
+            swap(a[p++], a[l]++);
+        } else if (a[p] > a[r]) {
+            swap(a[p], a[r--]);
+        } else {
+            p++;
+        }
+    }
+    // left, l-1
+    // p, right
 }
 
 void print(uint32_t* a, uint32_t N)

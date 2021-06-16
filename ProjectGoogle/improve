@@ -1,0 +1,6 @@
+when you do i++, or inner iteration or storing last, think if its correct, might required a +1 or -1 look carefully
+
+
+Problems and Issues
+-------------------
+1. Godown = {last = i+1, missed and stored as last = i }

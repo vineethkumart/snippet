@@ -20,7 +20,6 @@ string longp(string s)
     auto const& n = s.length();
     int st(0);
 
-
     // consider each point as middle and expand - Odd length
     for (int i = 0; i < n; i++) {
         int low = i-1;
@@ -52,7 +51,7 @@ int main()
 {
     //string s = "forgeeksskeegfor";
     //string s = "iknowmalayalam";
-    string s = "aaaabbaa";
+    string s = "adccba";
     /*
      *  if we know if a smaller substring (i..j) is palindrome then we can find bigger string (i-1...j+1) 
      * dp[i][j] length of the longest palindrom in range i..j
@@ -62,28 +61,26 @@ int main()
      *  O(n2) time and space where n is the length of the original string not he string to be searched
      */
     auto const& n = s.length();
-    int dp[n][n];
+    int dp[n][n] = 0;
     
     for (int i = 0; i < n; i++) dp[i][i] = 1;
-    for (int i = 0; i < n-1; i++) dp[i][i+1] = (s[i] == s[i+1] ? 2 : 1);
+    for (int i = 0; i < n-1; i++) dp[i][i+1] = (s[i] == s[i+1] ? 1 : 0);
 
     // start generating from length 2. length 1  is computed already
     // if you think of substring its nothing but a transpose kind of a matrix
 
+    int ml(0);
     for (int len = 3; len <= n; len++) {
         for (int i = 0; i <= n - len; i++) {
             int j = i + len - 1;
-            if (s[i] == s[j]) {
-                dp[i][j] = 2 + dp[i+1][j-1];
-            } else {
-                dp[i][j] = max(dp[i+1][j], dp[i][j-1]);
+            if (s[i] == s[j] && dp[i+1][j-1]) {
+                dp[i][j] = true;
+                ml = len;
             }
         }
     }
 
-    cout <<  dp[0][n-1] << endl;
-
-
+    cout << ml;
     cout << longp(s);
     return 0;
 }
